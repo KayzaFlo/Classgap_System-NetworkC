@@ -3,27 +3,24 @@
 #include <sys/wait.h>
 
 int main() {
-    pid_t pid1 = fork(); // Premier enfant
+    int fd[2];
+    pipe(fd); // fd[0] = lecture, fd[1] = écriture
 
-    if (pid1 == 0) {
-        sleep(3);
-        printf("Enfant 1 terminé\n");
-        return 0;
+    if (fork() == 0) {
+        // ENFANT : écrit dans le pipe
+        close(fd[0]); // Ferme ce qu'il n'utilise pas
+        int valeur = 99;
+        write(fd[1], &valeur, sizeof(int));
+        close(fd[1]);
+    } else {
+        // PARENT : lit depuis le pipe
+        close(fd[1]); // Ferme ce qu'il n'utilise pas
+        int valeur;
+        read(fd[0], &valeur, sizeof(int));
+        printf("Parent reçu : %d\n", valeur);
+        close(fd[0]);
+        wait(NULL);
     }
-
-    pid_t pid2 = fork(); // Deuxième enfant
-
-    if (pid2 == 0) {
-        sleep(1);
-        printf("Enfant 2 terminé\n");
-        return 0;
-    }
-
-    // Parent attend uniquement l'enfant 2
-    waitpid(pid2, NULL, 0);
-    printf("Parent : enfant 2 fini, j'attends enfant 1\n");
-    waitpid(pid1, NULL, 0);
-    printf("Parent : tout le monde a fini\n");
 
     return 0;
 }
