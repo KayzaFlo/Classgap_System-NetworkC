@@ -11,7 +11,7 @@
 
 /* --- AJOUT POUR IPV4 (Réseau) --- */
 #include <netinet/in.h>   /* INDISPENSABLE pour struct sockaddr_in */
-#include <arpa/inet.h>    /* Pour htons(), htonl(), inet_pton() [cite: 21] */
+#include <arpa/inet.h>    /* Pour htons(), htonl(), inet_pton() */
 
 /* --- GARDE POUR UNIX (Local) --- */
 #include <sys/un.h>       /* Pour struct sockaddr_un */
@@ -24,6 +24,6 @@
 
 /* Définition pour Unix (si vous utilisez encore AF_UNIX) */
 #define SOCKET_PATH "/tmp/cours_socket.sock"
-#define SV_SOCK_PATH SOCKET_PATH // Pour corriger l'erreur dans server.pdf [cite: 105]
+#define SV_SOCK_PATH SOCKET_PATH // Pour corriger l'erreur dans server.pdf
 
 #endif /* COMMON_H */

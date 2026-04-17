@@ -11,9 +11,9 @@ int main() {
     memset(&svaddr, 0, sizeof(svaddr));
     svaddr.sin_family = AF_INET;
     svaddr.sin_port = htons(SV_SOCK_PORT);
-    inet_pton(AF_INET, "127.0.0.1", &svaddr.sin_addr); // Conversion IP texte vers binaire [cite: 21]
+    inet_pton(AF_INET, "127.0.0.1", &svaddr.sin_addr); // Conversion IP texte vers binaire
 
-    // Envoi direct sans connect() [cite: 22]
+    // Envoi direct sans connect()
     sendto(sfd, msg, strlen(msg), 0, (struct sockaddr *)&svaddr, sizeof(svaddr));
     
     // Attente de la réponse

@@ -16,8 +16,9 @@ int main(void){
 	memset(&addr, 0, sizeof(struct sockaddr_in));
 	addr.sin_family = AF_INET;
 
-	addr.sin_addr.s_addr = htonl(INADDR_ANY);
-	addr.sin_port = htons(SV_SOCK_PORT);
+	addr.sin_addr.s_addr = htonl(INADDR_ANY); // 127.0.0.1
+	addr.sin_port = htons(SV_SOCK_PORT); // 8080
+	// 127.0.0.1:8080
 
 	if (bind(sfd, (struct sockaddr *) &addr, sizeof(struct sockaddr_in)) == -1){
 		perror("bind");
@@ -45,7 +46,7 @@ int main(void){
 
 	strcpy(buf, "Done! :)\n");
 	if (write(cfd, buf, BUF_SIZE) == -1){
-		unlink(SV_SOCK_PATH);
+		// unlink(SV_SOCK_PATH); // Inutile pour AF_INET, c'était pour AF_UNIX
 		perror("write back");
 		exit(EXIT_FAILURE);
 	}

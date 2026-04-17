@@ -10,7 +10,7 @@ int main() {
     memset(&svaddr, 0, sizeof(svaddr));
     svaddr.sin_family = AF_INET;
     svaddr.sin_port = htons(SV_SOCK_PORT);
-    inet_pton(AF_INET, "127.0.0.1", &svaddr.sin_addr);
+    inet_pton(AF_INET, "127.0.0.1", &svaddr.sin_addr); // addr.sin_addr.s_addr = inet_addr("127.0.0.1");
 
     // 1. Établissement de la connexion 
     if (connect(sfd, (struct sockaddr *)&svaddr, sizeof(svaddr)) == -1) {
@@ -18,7 +18,7 @@ int main() {
         exit(1);
     }
 
-    // 2. Envoi et réception [cite: 55, 63]
+    // 2. Envoi et réception
     write(sfd, "Hello TCP", 9);
     ssize_t n = read(sfd, buf, BUF_SIZE - 1);
     if (n > 0) {
